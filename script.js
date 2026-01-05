@@ -1,6 +1,6 @@
 const getAPI = async function() {
     try {
-        const response = await fetch('https://www.boredapi.com/api/activity');
+        const response = await fetch('https://bored-api.appbrewery.com/random');
         const data = await response.json();
         return data.activity;
     } catch(e) {
