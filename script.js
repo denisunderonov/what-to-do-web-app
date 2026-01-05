@@ -1,21 +1,11 @@
 const getAPI = async function() {
     try {
-        const activities = await fetch('https://www.boredapi.com/api/activity/');
-        const activitiesJson = await activities.json();
-        return activitiesJson.activity;
+        const response = await fetch('https://www.boredapi.com/api/activity');
+        const data = await response.json();
+        return data.activity;
     } catch(e) {
         console.error(`Error: ${e}`);
         return 'Try refreshing the page';
-    }
-}
-
-const getText = async function() {
-    try {
-        const idea = await getAPI();
-        return String(idea);
-    } catch (e) {
-        console.log(`Error: ${e}`);
-        return 'Something went wrong';
     }
 }
 
@@ -25,17 +15,22 @@ const paragraphs = {
     paragraph3: document.querySelector('.active-block-3')
 }
 
-const setText = function(key) {
-    getText().then(text => {
+const setText = async function(key) {
+    try {
+        const text = await getAPI();
         paragraphs[key].textContent = text;
-    }).catch(error => {
+    } catch (error) {
         console.error(`Error: ${error}`);
         paragraphs[key].textContent = 'Failed to load idea';
-    });
+    }
 }
 
-const loadIdeas = function() {
-    Promise.all(['paragraph1', 'paragraph2', 'paragraph3'].map(el => setText(el)));
+const loadIdeas = async function() {
+    await Promise.all([
+        setText('paragraph1'),
+        setText('paragraph2'),
+        setText('paragraph3')
+    ]);
 }
 
 // Load ideas on page load
