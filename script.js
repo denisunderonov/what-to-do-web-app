@@ -1,8 +1,8 @@
 const getAPI = async function() {
     try {
-        const response = await fetch('https://bored-api.appbrewery.com/random');
+        const response = await fetch('https://api.adviceslip.com/advice');
         const data = await response.json();
-        return data.activity;
+        return data.slip.advice;
     } catch(e) {
         console.error(`Error: ${e}`);
         return 'Try refreshing the page';
