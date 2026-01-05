@@ -1,42 +1,50 @@
-getAPI = async function() {
+const getAPI = async function() {
     try {
         const activities = await fetch('https://www.boredapi.com/api/activity/');
-        activititiesJson = await activities.json();
-        return activititiesJson.activity;
+        const activitiesJson = await activities.json();
+        return activitiesJson.activity;
     } catch(e) {
-        console.error(`Ошибка: ${e}`)
+        console.error(`Error: ${e}`);
+        return 'Try refreshing the page';
     }
 }
 
-getText = async function() {
+const getText = async function() {
     try {
         const idea = await getAPI();
-        ideaToString = String(idea);
+        return String(idea);
     } catch (e) {
-        console.log(`Ошибка такая вот: ${e}`)
+        console.log(`Error: ${e}`);
+        return 'Something went wrong';
     }
-    return ideaToString;
 }
-    
-
-// Начинаю работать с элементами 
 
 const paragraphs = {
-    paragrapgh1: document.querySelector('.active-block-1'),
-    paragrapgh2: document.querySelector('.active-block-2'),
-    paragrapgh3: document.querySelector('.active-block-3')
+    paragraph1: document.querySelector('.active-block-1'),
+    paragraph2: document.querySelector('.active-block-2'),
+    paragraph3: document.querySelector('.active-block-3')
 }
 
-setText = function(key) {
-    getText().then(test => {
-        paragraphs[key].textContent = test;
-      }).catch(error => {
-        console.error(`Ошибка: ${error}`);
-      });
+const setText = function(key) {
+    getText().then(text => {
+        paragraphs[key].textContent = text;
+    }).catch(error => {
+        console.error(`Error: ${error}`);
+        paragraphs[key].textContent = 'Failed to load idea';
+    });
 }
 
-Promise.all(['paragrapgh1', 'paragrapgh2', 'paragrapgh3'].map(el => setText(el)));
+const loadIdeas = function() {
+    Promise.all(['paragraph1', 'paragraph2', 'paragraph3'].map(el => setText(el)));
+}
 
+// Load ideas on page load
+loadIdeas();
 
-
-
+// Refresh button
+const refreshBtn = document.getElementById('refreshBtn');
+if (refreshBtn) {
+    refreshBtn.addEventListener('click', function() {
+        loadIdeas();
+    });
+}

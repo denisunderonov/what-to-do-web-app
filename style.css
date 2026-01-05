@@ -66,3 +66,50 @@ p {
     margin-top: auto;
     font-size: small;
 }
+
+/* Кнопка обновления */
+#refreshBtn {
+    margin: 30px auto 20px;
+    padding: 12px 30px;
+    background-color: #6a4c93;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+#refreshBtn:hover {
+    background-color: #553d7a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 76, 147, 0.4);
+}
+
+#refreshBtn:active {
+    transform: translateY(0);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 28px;
+    }
+    
+    ul li {
+        padding: 15px;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+    
+    p {
+        font-size: 14px;
+    }
+}
